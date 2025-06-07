@@ -1,9 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import { connectDB } from "./config/db.js";
-import { Person, Testimony } from "./models/Person.js";
-
+// "Changes made""
 const app = express();
 
 const corsOptions = {
