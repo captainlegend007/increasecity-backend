@@ -24,14 +24,14 @@ app.get("/", (req, res) => {
   res.send("Hello Express");
 });
 
-app.get("/your-data", async (req, res) => {
-  try {
-    const allData = await Person.find({});
-    res.json(allData);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+// app.get("/your-data", async (req, res) => {
+//   try {
+//     const allData = await Person.find({});
+//     res.json(allData);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// });
 
 // Saving Data in MongoDb
 app.post("/echurch/prayer-request", async (req, res) => {
