@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const PORT = 5000;
 
-await connectDB();
+// await connectDB();
 
 app.get("/", (req, res) => {
   res.send("Hello Express");
