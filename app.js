@@ -24,6 +24,11 @@ app.get("/", (req, res) => {
   res.send("Hello Express");
 });
 
+app.get("/your-data", async (req, res) => {
+  const allData = await Person.find({});
+  res.json(allData);
+});
+
 // Saving Data in MongoDb
 app.post("/echurch/prayer-request", async (req, res) => {
   console.log(req.body);
