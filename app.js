@@ -25,8 +25,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/your-data", async (req, res) => {
-  const allData = await Person.find({});
-  res.json(allData);
+  try {
+    const allData = await Person.find({});
+    res.json(allData);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 // Saving Data in MongoDb
