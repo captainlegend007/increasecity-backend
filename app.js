@@ -7,7 +7,7 @@ import { Person, Testimony } from "./models/Person.js";
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://captainlegend007.github.io/"],
+  origin: "https://captainlegend007.github.io/",
   credentials: true,
   optionSuccessStatus: 200,
 };
