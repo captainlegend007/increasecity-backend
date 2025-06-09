@@ -23,13 +23,37 @@ app.get("/", (req, res) => {
   res.send("Hello Express");
 });
 
-//Get all user data
+//Get all prayer requests
 app.get("/echurch/prayer-requests/:username/:password", async (req, res) => {
-  const allUserData = await Person.find({});
-  res.send(allUserData);
+  const { username, password } = req.params;
+  try {
+    const allUserData = await Person.find({});
+    if (username === "admin" && password === "12345") {
+      res.send(allUserData);
+    } else {
+      res.send("Invalid user");
+    }
+  } catch (error) {
+    console.log(error);
+  }
 });
 
-// // Saving Data in MongoDb
+//Get all prayer requests
+app.get("/echurch/testimonies/:username/:password", async (req, res) => {
+  const { username, password } = req.params;
+  try {
+    const allUserData = await Testimony.find({});
+    if (username === "admin" && password === "12345") {
+      res.send(allUserData);
+    } else {
+      res.send("Invalid user");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// // Saving Prayer Request in MongoDb
 app.post("/echurch/prayer-request", async (req, res) => {
   console.log(req.body);
   try {
@@ -47,7 +71,7 @@ app.post("/echurch/prayer-request", async (req, res) => {
   }
 });
 
-// Saving Data in MongoDb
+// Saving Testimony in MongoDb
 app.post("/echurch/share-your-testimonies", async (req, res) => {
   console.log(req.body);
   try {
