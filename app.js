@@ -8,7 +8,7 @@ import "dotenv/config";
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://captainlegend007.github.io/"],
+  origin: ["http://localhost:5173", "https://captainlegend007.github.io"],
   credentials: true,
   optionSuccessStatus: 200,
 };
@@ -21,6 +21,12 @@ await connectDB();
 
 app.get("/", (req, res) => {
   res.send("Hello Express");
+});
+
+//Get all user data
+app.get("/echurch/prayer-requests/:username/:password", async (req, res) => {
+  const allUserData = await Person.find({});
+  res.send(allUserData);
 });
 
 // // Saving Data in MongoDb
