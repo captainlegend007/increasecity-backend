@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import { connectDB } from "./config/db.js";
 import { Person, Testimony } from "./models/Person.js";
+import "dotenv/config";
 
 const app = express();
 
@@ -15,8 +16,6 @@ app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-const PORT = 5000;
 
 await connectDB();
 
@@ -60,6 +59,6 @@ app.post("/echurch/share-your-testimonies", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
 });
