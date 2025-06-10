@@ -44,6 +44,7 @@ app.get("/admin/:username/:password", async (req, res) => {
   try {
     const allUserData = await Testimony.find({});
     if (process.env.USER === "admin" && process.env.PASSWORD === "12345") {
+      res.status(200);
       res.send(allUserData);
     } else {
       res.send("Invalid user");
