@@ -39,11 +39,11 @@ app.get("/echurch/prayer-requests/:username/:password", async (req, res) => {
 });
 
 //Get all prayer requests
-app.get("/echurch/testimonies/:username/:password", async (req, res) => {
+app.get("/admin/:username/:password", async (req, res) => {
   const { username, password } = req.params;
   try {
     const allUserData = await Testimony.find({});
-    if (username === "admin" && password === "12345") {
+    if (process.env.USER === "admin" && process.env.PASSWORD === "12345") {
       res.send(allUserData);
     } else {
       res.send("Invalid user");
