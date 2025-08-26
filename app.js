@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { connectDB } from "./config/db.js";
-import { Person, Testimony } from "./models/Person.js";
+import { Person, Testimony, Register } from "./models/Person.js";
 import "dotenv/config";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 await connectDB();
 
-// app.get("/", (req, res) => {
+// app.get("/", (req, res) => {authauth
 //   res.send("Hello Express");
 // });
 
@@ -41,8 +41,8 @@ const verifyUser = (req, res, next) => {
   }
 };
 
-app.get("/", verifyUser, async (req, res) => {
-  const allUserData = await Testimony.find({});
+app.get("/users", verifyUser, async (req, res) => {
+  const allUserData = await Register.find({});
   return res.json({
     status: "success",
     name: req.username,
@@ -84,6 +84,10 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("Working");
+});
+
 // Handle User Logout
 app.get("/logout", (req, res) => {
   res.clearCookie("token");
@@ -123,6 +127,37 @@ app.post("/echurch/share-your-testimonies", async (req, res) => {
     res.send("Testimony Added");
   } catch (error) {
     res.send(error.message);
+  }
+});
+
+app.post("/registration", async (req, res) => {
+  try {
+    const { name, email, number, physical, online } = req.body;
+
+    if (!name && !email && !number && physical && online) {
+      return res.json({ success: false, message: "You didn't fill the form completely" });
+    } else {
+      const user = await Register.findOne({
+        $or: [{ name }, { email }],
+      });
+
+      if (user) {
+        return res.json({ success: false, error: "User already exists" });
+      } else {
+        const newRegistration = new Register({
+          name,
+          number,
+          email,
+          physical,
+          online,
+        });
+        await newRegistration.save();
+        console.log(newRegistration);
+      }
+    }
+    return res.json({ success: true, message: "Registeration Successful" });
+  } catch (error) {
+    return res.json({ success: false, message: "Registraton Unsucessful" });
   }
 });
 
