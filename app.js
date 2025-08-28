@@ -71,17 +71,18 @@ app.get("/users", verifyUser, async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
+  res.json({ username, password });
 
-  if (username === process.env.USERNAME && password === process.env.PASSWORD) {
-    const token = jwt.sign({ username }, "our-jsonwebtoken-secret-key", {
-      expiresIn: "1d",
-    });
-    res.cookie("token", token);
+  // if (username === process.env.USERNAME && password === process.env.PASSWORD) {
+  //   const token = jwt.sign({ username }, "our-jsonwebtoken-secret-key", {
+  //     expiresIn: "1d",
+  //   });
+  //   res.cookie("token", token);
 
-    return res.json({ status: "success" });
-  } else {
-    return res.json({ message: "Record doesn't exist" });
-  }
+  //   return res.json({ status: "success" });
+  // } else {
+  //   return res.json({ message: "Record doesn't exist" });
+  // }
 });
 
 app.get("/", (req, res) => {
@@ -89,7 +90,7 @@ app.get("/", (req, res) => {
 });
 
 // Handle User Logout
-app.get("/logout", (req, res) => {
+app.post("/logout", (req, res) => {
   res.clearCookie("token");
   return res.json({ status: "success" });
 });
