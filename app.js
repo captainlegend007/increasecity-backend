@@ -89,6 +89,10 @@ app.post("/logout", (req, res) => {
   return res.json({ status: "success" });
 });
 
+app.get("/", (req, res) => {
+  res.send("Working");
+});
+
 // // Saving Prayer Request in MongoDb
 app.post("/echurch/prayer-request", async (req, res) => {
   console.log(req.body);
