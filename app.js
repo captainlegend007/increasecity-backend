@@ -90,7 +90,7 @@ app.post("/logout", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Working");
+  res.send("Working Increase City Backend");
 });
 
 // // Saving Prayer Request in MongoDb
