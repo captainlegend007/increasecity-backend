@@ -72,7 +72,8 @@ app.get("/users", verifyUser, async (req, res) => {
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   res.send(process.env.USERNAME + "username");
-  res.send(process.env.password + "password");
+  res.send(process.env.PASSWORD + "password");
+  res.send(process.env.PORT + "PORT");
 
   if (username === process.env.USERNAME && password === process.env.PASSWORD) {
     const token = jwt.sign({ username }, "our-jsonwebtoken-secret-key", {
