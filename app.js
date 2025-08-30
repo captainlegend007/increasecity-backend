@@ -80,10 +80,10 @@ app.post("/login", async (req, res) => {
     const token = jwt.sign({ username }, process.env.SECRET, {
       expiresIn: "1d",
     });
-
-    res.cookie("token", token).json({ success: true });
+    console.log("Token successfully created:", token);
+    return res.cookie("token", token).json({ success: true });
   } else {
-    res.json({ message: "Record doesn't exist" });
+    return res.json({ message: "Record doesn't exist" });
   }
 });
 
@@ -172,10 +172,10 @@ app.post("/registration", async (req, res) => {
         });
         await newRegistration.save();
         console.log(newRegistration);
-        createMessage(firstName, lastName);
+        await createMessage(firstName, lastName);
       }
+      return res.json({ success: true, message: "Registeration Successful" });
     }
-    return res.json({ success: true, message: "Registeration Successful" });
   } catch (error) {
     return res.json({ success: false, message: "Registraton Unsucessful" });
   }
