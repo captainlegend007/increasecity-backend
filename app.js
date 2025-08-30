@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import { createMessage } from "./twilio.js";
 
-onsole.log("Vercel is running. Account SID:", process.env.TWILIO_ACCOUNT_SID);
+console.log("Vercel is running. Account SID:", process.env.TWILIO_ACCOUNT_SID);
 console.log("Vercel is running. Auth Token:", process.env.TWILIO_AUTH_TOKEN);
 
 const app = express();
