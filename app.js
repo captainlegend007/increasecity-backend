@@ -30,12 +30,12 @@ await connectDB();
 // });
 
 const verifyUser = (req, res, next) => {
-  console.log("Verification Secret:", process.env.SECRET);
+  console.log("Verification Secret:", "secret");
   const token = req.cookies.token;
   if (!token) {
     return res.status(403).json({ message: "We need token please provide it." });
   } else {
-    jwt.verify(token, process.env.SECRET, (err, decode) => {
+    jwt.verify(token, "secret", (err, decode) => {
       if (err) {
         return res.status(403).json({ message: "Authentication Error" });
       } else {
@@ -75,11 +75,11 @@ app.get("/users", verifyUser, async (req, res) => {
 // });
 
 app.post("/login", async (req, res) => {
-  console.log("Signing Secret:", process.env.SECRET);
+  console.log("Signing Secret:", "secret");
   const { username, password } = req.body;
 
   if (username === process.env.USERNAME && password === process.env.PASSWORD) {
-    const token = jwt.sign({ username }, process.env.SECRET, {
+    const token = jwt.sign({ username }, "secret", {
       expiresIn: "1d",
     });
     console.log("Token successfully created:", token);
