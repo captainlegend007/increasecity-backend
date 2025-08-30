@@ -83,7 +83,14 @@ app.post("/login", async (req, res) => {
       expiresIn: "1d",
     });
     console.log("Token successfully created:", token);
-    return res.cookie("token", token).json({ success: true });
+    return res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      })
+      .json({ success: true });
   } else {
     return res.json({ message: "Record doesn't exist" });
   }
