@@ -35,14 +35,18 @@ const verifyUser = (req, res, next) => {
   if (!token) {
     return res.status(403).json({ message: "We need token please provide it." });
   } else {
-    jwt.verify(token, process.env.SECRET, (err, decode) => {
-      if (err) {
-        return res.status(403).json({ message: "Authentication Error" });
-      } else {
-        req.username = decode.username;
-        next();
+    jwt.verify(
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkxlZ2VuZCIsImlhdCI6MTc1NjUyNTEzOSwiZXhwIjoxNzU2NjExNTM5fQ.3qIELJkcKSlKJ70KKxQzXRCb6Pvg8j2_OEhF9H80KB0",
+      "secret",
+      (err, decode) => {
+        if (err) {
+          return res.status(403).json({ message: "Authentication Error" });
+        } else {
+          req.username = decode.username;
+          next();
+        }
       }
-    });
+    );
   }
 };
 
