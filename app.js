@@ -99,7 +99,7 @@ app.post("/login", async (req, res) => {
 // Handle User Logout
 app.post("/logout", (req, res) => {
   res.clearCookie("token");
-  return res.json({ status: "success" });
+  return res.json({ success: true, status: "success" });
 });
 
 app.get("/", (req, res) => {
