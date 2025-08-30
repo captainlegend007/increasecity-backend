@@ -91,7 +91,13 @@ app.post("/logout", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Working Increase City Backend");
+  // res.send("Working Increase City Backend");
+  res.json({
+    accountSid: process.env.TWILIO_ACCOUNT_SID,
+    authToken: process.env.TWILIO_AUTH_TOKEN,
+    username: process.env.USERNAME,
+    password: process.env.PASSWORD,
+  });
 });
 
 // // Saving Prayer Request in MongoDb
