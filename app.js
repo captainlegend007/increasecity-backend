@@ -84,7 +84,7 @@ app.post("/login", async (req, res) => {
     });
     console.log("Token successfully created:", token);
     return res
-      .cookie("secret", token, {
+      .cookie("token", token, {
         httpOnly: true,
         secure: true,
         sameSite: "none",
