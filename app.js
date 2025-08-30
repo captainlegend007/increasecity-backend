@@ -32,11 +32,11 @@ await connectDB();
 const verifyUser = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
-    return res.json({ message: "We need token please provide it." });
+    return res.status(403).json({ message: "We need token please provide it." });
   } else {
     jwt.verify(token, process.env.SECRET, (err, decode) => {
       if (err) {
-        return res.json({ message: "Authentication Error" });
+        return res.status(403).json({ message: "Authentication Error" });
       } else {
         req.username = decode.username;
         next();
