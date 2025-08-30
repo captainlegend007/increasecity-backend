@@ -30,6 +30,7 @@ await connectDB();
 // });
 
 const verifyUser = (req, res, next) => {
+  console.log("Verification Secret:", process.env.SECRET);
   const token = req.cookies.token;
   if (!token) {
     return res.status(403).json({ message: "We need token please provide it." });
@@ -74,6 +75,7 @@ app.get("/users", verifyUser, async (req, res) => {
 // });
 
 app.post("/login", async (req, res) => {
+  console.log("Signing Secret:", process.env.SECRET);
   const { username, password } = req.body;
 
   if (username === process.env.USERNAME && password === process.env.PASSWORD) {
