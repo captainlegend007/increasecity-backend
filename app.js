@@ -103,13 +103,13 @@ app.post("/logout", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  // res.send("Working Increase City Backend");
-  res.json({
-    accountSid: process.env.TWILIO_ACCOUNT_SID,
-    authToken: process.env.TWILIO_AUTH_TOKEN,
-    username: process.env.USERNAME,
-    password: process.env.PASSWORD,
-  });
+  res.send("Working Increase City Backend");
+  // res.json({
+  //   accountSid: process.env.TWILIO_ACCOUNT_SID,
+  //   authToken: process.env.TWILIO_AUTH_TOKEN,
+  //   username: process.env.USERNAME,
+  //   password: process.env.PASSWORD,
+  // });
 });
 
 // // Saving Prayer Request in MongoDb
@@ -186,7 +186,7 @@ app.post("/registration", async (req, res) => {
         console.log(newRegistration);
         await createMessage(firstName, lastName);
       }
-      return res.json({ success: true, message: "Registeration Successful" });
+      return res.json({ success: true, message: "Registration Successful" });
     }
   } catch (error) {
     return res.json({ success: false, message: "Registraton Unsucessful" });
