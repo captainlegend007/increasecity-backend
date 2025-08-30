@@ -75,7 +75,7 @@ app.get("/users", verifyUser, async (req, res) => {
 // });
 
 app.post("/login", async (req, res) => {
-  console.log("Signing Secret:", "secret");
+  // console.log("Signing Secret:", "secret");
   const { username, password } = req.body;
 
   if (username === process.env.USERNAME && password === process.env.PASSWORD) {
