@@ -27,11 +27,13 @@ const testimonySchema = new mongoose.Schema(
 );
 const registerSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    address: { type: String, required: true },
+    gender: { type: String, required: true },
     email: { type: String, required: true },
     number: { type: Number, required: true },
-    physical: { type: String, required: true },
-    online: { type: String, required: true },
+    attendance: { type: String, required: true },
     userOrder: { type: Object, default: {} },
   },
   {

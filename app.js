@@ -6,6 +6,7 @@ import { Person, Testimony, Register } from "./models/Person.js";
 import "dotenv/config";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
+import { createMessage } from "./twilio.js";
 
 const app = express();
 
@@ -30,7 +31,7 @@ const verifyUser = (req, res, next) => {
   if (!token) {
     return res.json({ message: "We need token please provide it." });
   } else {
-    jwt.verify(token, "our-jsonwebtoken-secret-key", (err, decode) => {
+    jwt.verify(token, process.env.SECRET, (err, decode) => {
       if (err) {
         return res.json({ message: "Authentication Error" });
       } else {
@@ -44,7 +45,7 @@ const verifyUser = (req, res, next) => {
 app.get("/users", verifyUser, async (req, res) => {
   const allUserData = await Register.find({});
   return res.json({
-    status: "success",
+    success: true,
     name: req.username,
     database: allUserData,
   });
@@ -77,7 +78,7 @@ app.post("/login", async (req, res) => {
       expiresIn: "1d",
     });
 
-    res.cookie("token", token).json({ status: "success" });
+    res.cookie("token", token).json({ success: true });
   } else {
     res.json({ message: "Record doesn't exist" });
   }
@@ -131,27 +132,38 @@ app.post("/echurch/share-your-testimonies", async (req, res) => {
 
 app.post("/registration", async (req, res) => {
   try {
-    const { name, email, number, physical, online } = req.body;
+    const { firstName, lastName, address, gender, email, number, attendance } = req.body;
 
-    if (!name && !email && !number && physical && online) {
+    if (
+      !firstName ||
+      !lastName ||
+      !address ||
+      !gender ||
+      !email ||
+      !number ||
+      !attendance
+    ) {
       return res.json({ success: false, message: "You didn't fill the form completely" });
     } else {
       const user = await Register.findOne({
-        $or: [{ name }, { email }],
+        $or: [{ firstName }, { lastName }, { email }],
       });
 
       if (user) {
         return res.json({ success: false, error: "User already exists" });
       } else {
         const newRegistration = new Register({
-          name,
-          number,
+          firstName,
+          lastName,
+          address,
+          gender,
           email,
-          physical,
-          online,
+          number,
+          attendance,
         });
         await newRegistration.save();
         console.log(newRegistration);
+        createMessage(firstName, lastName);
       }
     }
     return res.json({ success: true, message: "Registeration Successful" });
