@@ -164,11 +164,14 @@ app.post("/registration", async (req, res) => {
       return res.json({ success: false, message: "You didn't fill the form completely" });
     } else {
       const user = await Register.findOne({
-        $or: [{ firstName }, { lastName }, { email }],
+        $or: [
+          { $and: [{ firstName: firstName }, { lastName: lastName }] },
+          { email: email },
+        ],
       });
 
       if (user) {
-        return res.json({ success: false, error: "User already exists" });
+        return res.json({ success: false, message: "User already exists" });
       } else {
         const newRegistration = new Register({
           firstName,
